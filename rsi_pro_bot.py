@@ -11,7 +11,50 @@ accountId = os.getenv('ACCOUNT_ID') or 'cf6ff7fe-5929-4349-872a-841cac56f7dc'
 timeframe = '30m'
 
 # Define parameters
-symbol_list = ['XAUUSDm','XAGUSDm','GBPUSDm','EURUSDm','AUDUSDm']
+symbol_list = ['XAUUSDm','XAGUSDm','GBPUSDm','EURUSDm','AUDUSDm','AUDMXNm', 'AUDNOKm', 'AUDNZDm', 'AUDPLNm', 'AUDSEKm', 'AUDSGDm',
+    'AUDTRYm', 'AUDUSDm', 'AUDUSX', 'AUDZARm', 'AUS200m', 'AUXAUD', 'AUXTHB', 'AUXUSD', 'AUXZAR',
+    'AVGOm', 'BABAm', 'BACm', 'BATUSDm', 'BAm', 'BCHUSDm', 'BIIBm', 'BMYm', 'BNBUSDm', 'BTCAUDm',
+    'BTCCNHm', 'BTCJPYm', 'BTCKRWm', 'BTCTHBm', 'BTCUSDm', 'BTCXAGm', 'BTCXAUm', 'BTCZARm',
+    'CADCHFm', 'CADCZKm', 'CADJPYm', 'CADMXNm', 'CADNOKm', 'CADPLNm', 'CADTRYm', 'CHFDKKm',
+    'CHFHUFm', 'CHFJPYm', 'CHFMXNm', 'CHFNOKm', 'CHFPLNm', 'CHFSEKm', 'CHFSGDm', 'CHFTRYm',
+    'CHFZARm', 'CHTRm', 'CMCSAm', 'CMEm', 'COSTm', 'CSCOm', 'CSXm', 'CVSm', 'CZKPLNm', 'Cm',
+    'DE30m', 'DKKCZKm', 'DKKHUFm', 'DKKJPYm', 'DKKPLNm', 'DKKSGDm', 'DKKZARm', 'DOTUSDm', 'DXYm',
+    'EAm', 'EBAYm', 'ENJUSDm', 'EQIXm', 'ETHUSDm', 'EURAUDm', 'EURAUX', 'EURCADm', 'EURCHFm',
+    'EURCZKm', 'EURDKKm', 'EURGBPm', 'EURGBX', 'EURHKDm', 'EURHKX', 'EURHUFm', 'EURJPX', 'EURJPYm',
+    'EURMXNm', 'EURNOKm', 'EURNZDm', 'EURPLNm', 'EURSEKm', 'EURSGDm', 'EURTRYm', 'EURUSDm', 'EURUSX',
+    'EURZARm', 'EUXAUD', 'EUXEUR', 'EUXGBP', 'EUXTHB', 'EUXUSD', 'EUXZAR', 'FBm', 'FILUSDm', 'FR40m',
+    'Fm', 'GBPAUDm', 'GBPAUX', 'GBPCADm', 'GBPCHFm', 'GBPCZKm', 'GBPDKKm', 'GBPHKX', 'GBPHUFm',
+    'GBPILSm', 'GBPJPX', 'GBPJPYm', 'GBPMXNm', 'GBPNOKm', 'GBPNZDm', 'GBPPLNm', 'GBPSEKm', 'GBPSGDm',
+    'GBPTRYm', 'GBPUSDm', 'GBPUSX', 'GBPZARm', 'GBXAUD', 'GBXGBP', 'GBXTHB', 'GBXUSD', 'GBXZAR',
+    'GILDm', 'GOOGLm', 'HDm', 'HK50m', 'HKDJPYm', 'HKXHKD', 'HKXTHB', 'HKXZAR', 'HUFJPYm', 'IBMm',
+    'IN50m', 'INTCm', 'INTUm', 'ISRGm', 'JNJm', 'JP225m', 'JPMm', 'JPXJPY', 'KOm', 'LINm', 'LLYm',
+    'LMTm', 'LTCUSDm', 'MAm', 'MCDm', 'MDLZm', 'METAm', 'MMMm', 'MOm', 'MRKm', 'MSFTm', 'MSm', 'MXNJPYm',
+    'NADUSD', 'NFLXm', 'NKEm', 'NOKDKKm', 'NOKJPYm', 'NOKSEKm', 'NVDAm', 'NZDCADm', 'NZDCHFm',
+    'NZDCZKm', 'NZDDKKm', 'NZDHUFm', 'NZDJPYm', 'NZDMXNm', 'NZDNOKm', 'NZDPLNm', 'NZDSEKm', 'NZDSGDm',
+    'NZDTRYm', 'NZDUSDm', 'NZDZARm', 'ORCLm', 'PEPm', 'PFEm', 'PGm', 'PLNDKKm', 'PLNHUFm', 'PLNJPYm',
+    'PLNSEKm', 'PMm', 'PYPLm', 'REGNm', 'SBUXm', 'SEKDKKm', 'SEKJPYm', 'SEKPLNm', 'SGDHKDm',
+    'SGDJPYm', 'SNXUSDm', 'SOLUSDm', 'STOXX50m', 'THBJPX', 'TMOm', 'TMUSm', 'TRXUSD', 'TRYDKKm',
+    'TRYJPYm', 'TRYZARm', 'TSLAm', 'Tm', 'UK100m', 'UKOILm', 'UNHm', 'UNIUSDm', 'UPSm', 'US30_x10m',
+    'US30m', 'US500_x100m', 'US500m', 'USDAED', 'USDAEDm', 'USDAMD', 'USDAMDm', 'USDARS', 'USDARSm',
+    'USDAZN', 'USDAZNm', 'USDBDT', 'USDBDTm', 'USDBGN', 'USDBGNm', 'USDBHD', 'USDBHDm', 'USDBND',
+    'USDBNDm', 'USDBRL', 'USDBRLm', 'USDBYN', 'USDBYR', 'USDCADm', 'USDCHFm', 'USDCLP', 'USDCLPm',
+    'USDCNHm', 'USDCNY', 'USDCNYm', 'USDCOP', 'USDCOPm', 'USDCRC', 'USDCZKm', 'USDDKKm', 'USDDZD',
+    'USDDZDm', 'USDEGP', 'USDEGPm', 'USDGEL', 'USDGELm', 'USDGHS', 'USDGHSm', 'USDHKDm', 'USDHKX',
+    'USDHRK', 'USDHRKm', 'USDHUF', 'USDHUFm', 'USDIDR', 'USDIDRm', 'USDILSm', 'USDINR', 'USDINRm',
+    'USDIRR', 'USDISK', 'USDISKm', 'USDJOD', 'USDJODm', 'USDJPX', 'USDJPYm', 'USDKES', 'USDKESm',
+    'USDKGS', 'USDKGSm', 'USDKHR', 'USDKRW', 'USDKRWm', 'USDKWD', 'USDKWDm', 'USDKZT', 'USDKZTm',
+    'USDLAK', 'USDLBP', 'USDLBPm', 'USDLKR', 'USDLKRm', 'USDMAD', 'USDMADm', 'USDMMK', 'USDMXNm',
+    'USDMYR', 'USDMYRm', 'USDNGN', 'USDNGNm', 'USDNOKm', 'USDNPR', 'USDNPRm', 'USDOMR', 'USDOMRm',
+    'USDPAB', 'USDPEN', 'USDPHP', 'USDPHPm', 'USDPKR', 'USDPKRm', 'USDPLNm', 'USDPYG', 'USDQAR',
+    'USDQARm', 'USDROL', 'USDRON', 'USDRONm', 'USDRUB', 'USDRUBm', 'USDRUR', 'USDRURm', 'USDRWF',
+    'USDSAR', 'USDSARm', 'USDSCR', 'USDSEKm', 'USDSGDm', 'USDSYP', 'USDSYPm', 'USDTHBm', 'USDTJS',
+    'USDTJSm', 'USDTMT', 'USDTMTm', 'USDTND', 'USDTNDm', 'USDTRYm', 'USDTUSD', 'USDTWD', 'USDTWDm',
+    'USDTZS', 'USDUAH', 'USDUAHm', 'USDUGX', 'USDUGXm', 'USDUYU', 'USDUZS', 'USDUZSm', 'USDVND',
+    'USDVNDm', 'USDVUV', 'USDVUVm', 'USDXAF', 'USDXOF', 'USDXOFm', 'USDZARm', 'USDZMW', 'USOILm',
+    'USTEC_x100m', 'USTECm', 'USXJPY', 'USXRUB', 'USXTHB', 'USXUSD', 'USXZAR', 'VRTXm', 'VZm', 'Vm',
+    'WFCm', 'WMTm', 'XAGAUDm', 'XAGEURm', 'XAGGBPm', 'XAGJPYm', 'XAGUSDm', 'XAUAUDm', 'XAUEURm',
+    'XAUGBPm','XAUUSDm','XNGUSDm','XOMm','XPDUSDm','XPTUSDm','XRPUSDm','XTZUSDm','ZARJPX','ZARJPYm'
+    ]
 rsi_period = 14
 
 import pandas as pd
