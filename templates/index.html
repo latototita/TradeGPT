@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+      <!-- contacts -->
+      <div id="contacts" class="contacts">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6 offset-md-3 ">
+                  <form class="main_form" action="" method="POST">
+                     {% csrf_token %} 
+                     <div class="row">
+                        <div class="col-sm-12 send" style="background-color: black;color:white;">
+                           {{indicator}}
+                        </div>
+                        <div class="col-sm-12">
+                           <label  for="pair" style="color:white;">Select a pair:</label>
+                           <select class="laban" name="pair" id="pair">
+                                 {% for pair in pairs %}
+                                    <option value="{{pair}}">{{pair}}</option>
+                                 {%  endfor %}
+                           </select>
+                           
+                        </div>
+                        {% if AI %}
+                        <div class="col-sm-12">
+                           <label  for="length" style="color:white;">Predict for the next:</label>
+                           <select class="laban" name="length" id="length">
+                                 {% for timeframe in time %}
+                                    <option value="{{timeframe}}">{{timeframe}}</option>
+                                 {%  endfor %}
+                           </select>
+                           
+                        </div>
+                        {% endif %}
+                        {% if margin %}
+                        <div class="col-sm-12">
+                           <label  for="volume" style="color:white;"> Select lot size for margin Calculation:</label>
+                           <select class="laban" name="volume" id="volume">
+                                 {% for volume in m_volume %}
+                                    <option value="{{volume}}">{{volume}}</option>
+                                 {%  endfor %}
+                           </select>
+                           
+                        </div>
+
+                        <div class="col-sm-12">
+                           <label  for="order_type" style="color:white;">Select Order Type</label>
+                           <select class="laban" name="order_type" id="order_type">
+                                 {% for timeframe in m_order_type %}
+                                    <option value="{{timeframe}}">{{timeframe}}</option>
+                                 {%  endfor %}
+                           </select>
+                           
+                        </div>
+                        {% else %}
+                        <div class="col-sm-12">
+                           <label  for="timeframe" style="color:white;">Select a timeframe:</label>
+                           <select class="laban" name="timeframe" id="timeframe">
+                                 {% for timeframe in timeframes %}
+                                    <option value="{{timeframe}}">{{timeframe}}</option>
+                                 {%  endfor %}
+                           </select>
+                           
+                        </div>
+                        {% endif %}
+                        <div class="col-sm-12">
+                           <input type="submit" class="send" value="Run Analysis">
+                        </div>
+                        <div class="col-sm-12">
+                        </br>
+                     </br>
+                           <p class="contactsus" style="color: black;">{{answer}}</p>
+                        </div>
+                        
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+{% endblock %}

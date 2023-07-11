@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+      <!-- end header -->
+      <!-- banner -->
+      <section class="banner_main">
+         <div class="container">
+            <div class="row d_flex">
+               <div class="col-md-5">
+                  <div class="text-bg">
+                     <h1>Next Generation<br>Artificial Intelligence</h1>
+                     <span>Real time News Analysis</span>
+                     <p>News Analysis by <u>Trade-IX-20</u> and the Technical Analysis TradeGPT-M40,</p>
+                  <!--<a href="/predict">Get Started</a>-->
+                  </div>
+               </div>
+               <div class="col-md-7">
+                  <div class="text-img">
+                     <br>
+                     <figure><img src="{% static 'images/robot.png' %}" /></figure>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end banner -->
+      <!-- Hosting -->
+      <div id="" class="hosting">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>What’s New In AI technology and Forex</h2>
+                     </br>
+                     <h3><u>TradeGPT-M40</u></h3>
+                  </div>
+               </div>
+            </div><!--
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="web_hosting">
+                     <figure><img  src="{% static 'images/web.jpg' %}" alt="#"/></figure>
+                     <p>TradeGPT-X2, build on Gpt pre-trained models and embedded technology, passed trend prediction with 87% Accurancy</p>
+                     <a href="/predict">Predict Now</a>
+                  </div>
+               </div>
+            </div>-->
+         </div>
+      </div>
+      <!-- end Hosting -->
+      <!-- Services  -->
+
+      <div id="service" class="Services" style="background-color: white;" >
+         <div class="container">
+            <div class="row">
+               
+               <div class="col-md-12">
+                     <h2 style="text-align: center;">Wall Street Journal News</h2>
+                  <div style="overflow-x:auto;"> 
+                  <table>
+                     <tr>
+                        <th>News Head Lines</th>
+                        <th>Image</th>
+                        <th>Other Affected Pairs</th>
+                        <th>Positivity</th>
+                        <th>Decision</th>
+                        <th>Symbol</th>
+                     </tr>
+                     {% for item in List %}
+                     <tr>
+                        <td>{{ item.Headline }}</td>
+                        <td>
+                           {% if item.thumbnail_url %}
+                               <img src="{{ item.thumbnail_url }}" style="height: 100px; width: 290px;">
+                           {% else %}
+                               <img src="{% static 'images/try.png' %}" style="height: 100px; width: 290px;">
+                           {% endif %}
+                       </td>
+                       
+                        <td>{{ item.relatedTickers }}</td>
+                        <td>
+                           {{ item.Sentiment_Score }}
+                       </td>
+                        <td {% if "Rise" in item.Sentiment_Label %} style="color: blue;" {% elif "Fall" in item.Sentiment_Label %} style="color: red;" {% endif %}>{{ item.Sentiment_Label }}</td>
+                        <td>{{ item.Symbol }}</td>
+                     </tr>
+                     {% endfor %}
+                  </table>
+               </div>  
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="service" class="Services" style="background-color: white;" >
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <h2 style="text-align: center;">Major Forex Pairs Analysis</h2>
+                  <div style="overflow-x:auto;">
+                  <table>
+                     <tr>
+                        <th>Pattern</th>
+                        <th>Decision</th>
+                        <th>Timeframe</th>
+                        <th>Symbol</th>
+                     </tr>
+                     {% for item in table_data %}
+                     <tr>
+                        <td>{{ item.Pattern }}</td>
+                        <td {% if "Buy" in item.Decision %} style="color: blue;" {% elif "Sell" in item.Decision %} style="color: red;" {% endif %}>{{ item.Decision }}</td>
+                        <td>{{ item.Timeframe }}</td>
+                        <td>{{ item.Symbol }}</td>
+                     </tr>
+                     {% endfor %}
+                  </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+    
+   
+      <!-- why 
+      <div id="why" class="why">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="titlepage">
+                     <h2>Why you should choose </h2>
+                     <p>making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still </p>
+                  </div>
+               </div>
+            </div>
+
+            <div class="row">
+               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <div id="box_ho" class="why-box">
+                     <i><img src="{% static 'images/why1.png' %}" alt="#" /></i>
+                     <h3>Powerful AI in forex</h3>
+                     <p>Use TradeGPT-X2 AND TradeGPT-M40 to get trends expected in the next 1 hour,2 hours,3 hours, 4 hours and lasts 5 hours,</p>
+                  </div>
+                  <a class="read_more bg" href="#">Read More</a>
+               </div>
+               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <div class="why-box">
+                     <i><img src="{% static 'images/why2.png' %}" alt="#" /></i>
+                     <h3>Totaly Optimised</h3>
+                     <p>making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still </p>
+                  </div>
+                  <a class="read_more bg" href="#">Read More</a>
+               </div>
+               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <div class="why-box">
+                     <i><img src="{% static 'images/why3.png' %}" alt="#" /></i>
+                     <h3>Worldwide Support</h3>
+                     <p>making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still </p>
+                  </div>
+                  <a class="read_more bg" href="#">Read More</a>
+               </div>
+            </div>-->
+         </div>
+      </div>
+      <!-- end why -->
+      {% endblock %}

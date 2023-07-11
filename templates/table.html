@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+      <!-- contacts -->
+      <div id="contacts" class="contacts">
+         <div class="container">
+            <div class="row">
+               <table>
+                  <tr>
+                      <th>Pattern</th>
+                      <th>Decision</th>
+                      <th>Timeframe</th>
+                      <th>Symbol</th>
+                  </tr>
+                  {% for item in table_data %}
+                  <tr>
+                      <td>{{ item.Pattern }}</td>
+                      <td {% if "Buy" in item.Decision %} style="color: blue;" {% elif "Sell" in item.Decision %} style="color: red;" {% endif %}>{{ item.Decision }}</td>
+                      <!--<td>{{ item.Decision }}</td>-->
+                      <td>{{ item.Timeframe }}</td>
+                      <td>{{ item.Symbol }}</td>
+                  </tr>
+                  {% endfor %}
+              </table>
+               <div class="col-md-6 offset-md-3 ">
+                  <form class="main_form" action="" method="POST">
+                     {% csrf_token %} 
+                     <div class="row">
+                        <div class="col-sm-12 send" style="background-color: black;color:white;">
+                           {{indicator}}(all timeframes)
+                           
+                        </div>
+                        </div>
+                        <div class="col-sm-12">
+                           <label for="pair" style="color:white;">Select a pair:</label>
+                           <input type="text" id="searchInput" placeholder="Search currency pairs..." />
+                           <input type="hidden" id="selectedPair" name="pair" /> <!-- Hidden input field to store the selected pair -->
+                           <div id="options" class="laban" style="height: 200px; overflow-y: scroll;">
+                             {% for pair in pairs %}
+                             <div class="pair-option" onclick="selectPair('{{ pair }}')" data-value="{{ pair }}">{{ pair }}</div>
+                             {% endfor %}
+                           </div>
+                         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="col-sm-12">
+                           <input type="submit" class="send" value="Run Analysis">
+                        </div>
+                        <div class="col-sm-12">
+                        </br>
+                     </br>
+                           <p class="contactsus" style="color: black;">{{answer|safe}}</p>
+                           
+                          
+                        </div>
+                        
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </br>
+   </br>
+   </br>
+   </br>
+   </br>
+   </br>
+   </br>
+   </br>
+   </br>
+   </br>
+   </br>
+   </br>
+      </div>
+
+</br>
+
+
+{% endblock %}
