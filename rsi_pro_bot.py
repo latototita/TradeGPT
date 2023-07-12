@@ -243,7 +243,6 @@ async def main():
                 await asyncio.sleep(1000) 
             else:
                 print("--------------------------------------------------")
-                await asyncio.sleep(300)  # Sleep for 1 minute before the next iteration
         await asyncio.sleep(1000)  # Sleep for 1 minute before the next iteration
 
 asyncio.run(main())
