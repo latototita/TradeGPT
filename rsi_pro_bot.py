@@ -8,7 +8,7 @@ import pandas as pd
 # Initialize MetaApi client
 token = os.getenv('TOKEN') or 'eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YjI0NTQ0ZWYzMWI0NzQ4NWMxNzQ1NmUzNzdmYTlhZiIsInBlcm1pc3Npb25zIjpbXSwidG9rZW5JZCI6IjIwMjEwMjEzIiwiaW1wZXJzb25hdGVkIjpmYWxzZSwicmVhbFVzZXJJZCI6IjZiMjQ1NDRlZjMxYjQ3NDg1YzE3NDU2ZTM3N2ZhOWFmIiwiaWF0IjoxNjg1NTM4OTg4fQ.K0bb-27iMrcf3gDYGylSgmf1KkcIgnLDL961KBHD3vuYwLC9funTPn-U7wBhvBUDN9pXwdwkBPoA19zIOiZLUxLcNWKcQD3i26TIdu9EhES1xnl1_dLfTPeDhN6SCHGZILh2fO331HexxRa0wqmOiUKYEZgLHSo9VXMCtFSgxJyqrhQzU35U76EWCKHI4yIYRAu8XSFR8RZ6GjeBgqI-J7Y--Z68ldAWisc2RKDUgFeo4ooillmrzTr73dr1usEn9APO25jeUGLm6Qkc8u8eox_vqSvFqovpZZ3czbR21-oEdqFT5EunGh-98WBND6IXfZlxDlBHJ-Ps7r1o9jm4A7vUPBFuGQ6MQ1dcUqKTNYA4p2DGA4lgB1kljoUQhPFau1QkgsJxc7KZExLs8Clg4aNybEO8SwP7uKt9V2UBDqRJT7ZUIrKKgz0uNisuPmS8ml5kKOKcZVQaAUvkbXJuI6vmKWVPeZdGEJu009W-tOuAvgiy2xgrtUpTFBgPAPciK-jrxiRdLHBTij40uYem0UhdmmlaUEH9FGnf9LpnVkvVTl7nrANf3g-yOI3yOAoBupZfAPucEGP8HVvZBfmwdu2GhAMs1cDDij49AUJEoBt1FDqYxOgIyvhGY5Baisn9FC_V-FROyKASzXz0A3cHZUZ63Vm9ghDsDA6rOJd1Kkk'
 accountId = os.getenv('ACCOUNT_ID') or 'cf6ff7fe-5929-4349-872a-841cac56f7dc'
-timeframe = '30m'
+timeframe = '1m'
 
 # Define parameters
 symbol_list = ['XAUUSDm','XAGUSDm','GBPUSDm','EURUSDm','AUDUSDm','AUDMXNm', 'AUDNOKm', 'AUDNZDm', 'AUDPLNm', 'AUDSEKm', 'AUDSGDm',
@@ -94,13 +94,13 @@ def check_signals(candles, rsi_period):
         if abs(current_rsi_value - last_crossing_threshold) <= 10:
             if last_crossing_threshold == 70:
                 trend_direction = "Downwards"
-                sell_signal = current_rsi_value >= 63 and last_crossing_threshold == 70
+                sell_signal = current_rsi_value >= 65 and last_crossing_threshold == 70
                 buy_signal = not sell_signal
                 if sell_signal:
                     print("Sell signal, crossed 70, now in a downtrend")
             else:
                 trend_direction = "Upwards"
-                buy_signal = current_rsi_value <= 37 and last_crossing_threshold == 30
+                buy_signal = current_rsi_value <= 35 and last_crossing_threshold == 30
                 sell_signal = not buy_signal
                 if buy_signal:
                     print("Buy signal, crossed 30, now in an uptrend")
@@ -171,7 +171,7 @@ async def main():
                     # Apply ATR indicator
                     df['atr'] = ta.atr(df['high'], df['low'], df['close'], length=14)
                     if buy_signal:
-                        take_profit = current_price + (atr_multiplier * df['atr'][-1])
+                        take_profit = current_price + (0.5 * df['atr'][-1])
                         stop_loss = current_price - (atr_multiplier * df['atr'][-1])
                         try:
                             # Calculate margin required for trade
@@ -202,7 +202,7 @@ async def main():
                             print('Trade failed with error:')
                             print(api.format_error(err))
                     if sell_signal:
-                        take_profit = current_price - (atr_multiplier * df['atr'][-1])
+                        take_profit = current_price - (0.5 * df['atr'][-1])
                         stop_loss = current_price + (atr_multiplier * df['atr'][-1])
                         try:
                             # Calculate margin required for trade
