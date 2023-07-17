@@ -925,4 +925,4 @@ def inverse_head_and_shoulders(candles):
         elif prices[-1] < prices[-inverse_head_and_shoulders_length:].min():
             return 'Sell Decision: Enter short position'
         else:
-            return None
+            return 'Empty'
