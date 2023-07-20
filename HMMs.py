@@ -70,7 +70,6 @@ async def load_data():
     return inputs, targets
 
 async def main():
-    
     # Load and preprocess data
     X, y = await load_data()
 
@@ -80,7 +79,7 @@ async def main():
     num_iterations = 100  # Number of Baum-Welch iterations
 
     # Reshape the data to 2D array (num_samples, num_features)
-    X = X.reshape(-1, input_dim)
+    X = df.to_numpy().reshape(-1, input_dim)
 
     # Create an HMM model
     model = hmm.GaussianHMM(n_components=num_states, n_iter=num_iterations)
@@ -98,11 +97,12 @@ async def main():
     # Print each generated sample
     for i in range(len(generated_samples)):
         sample = generated_samples[i]
-        # Each observation in the sample contains all features for one candle
-        for j in range(0, len(sample), input_dim):
-            open_price, high_price, low_price, close_price, volume = sample[j: j + input_dim]
+        # Reshape the sample back to (window_size, input_dim) shape
+        sample = sample.reshape(-1, input_dim)
+        for j in range(len(sample)):
+            open_price, high_price, low_price, close_price, volume = sample[j]
             print(
-                f"Sample {i+1}, Candle {j//input_dim + 1}: Open={open_price}, High={high_price}, Low={low_price}, Close={close_price}, Volume={volume}"
+                f"Sample {i+1}, Candle {j+1}: Open={open_price}, High={high_price}, Low={low_price}, Close={close_price}, Volume={volume}"
             )
 
 # Run the main function
