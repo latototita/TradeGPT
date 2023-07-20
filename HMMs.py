@@ -42,68 +42,73 @@ async def load_data():
     account = await api.metatrader_account_api.get_account(accountId)
     # Load your data using pandas or any other preferred method
     candles =  await account.get_historical_candles(symbol='EURUSD', timeframe='1m', start_time=None, limit=1000)
-    print(candles)
     data = pd.DataFrame(candles)
     data.set_index('time', inplace=True)
     data['close'] = data['close'].astype(float)
-    df = pd.DataFrame(candles)
-    df.set_index('time', inplace=True)
-    df['close'] = df['close'].astype(float)
-    # Apply ATR indicator
-    df.dropna(inplace=True)
-    
-    df['atr'] = ta.atr(df['high'], df['low'], df['close'], length=14)
-    window_size = 10  # You can adjust the window size as per your preference
+    # Preprocess and clean the data as needed
+    # ...
 
-    # Create sequences of observations using a sliding window approach
-    sequences = []
-    for i in range(len(data) - window_size):
-        sequence = data.iloc[i: i + window_size].to_numpy().flatten()
-        sequences.append(sequence)
+    # Extract the necessary columns for input and output
+    inputs = data[['open', 'high', 'low', 'close', 'tickVolume']]
+    targets = data[['open', 'high', 'low', 'close', 'tickVolume']]
 
-    sequences = np.array(sequences)
+    # Normalize the inputs and targets if required
+    # ...
 
-    # Extract inputs and targets
-    inputs = sequences
-    targets = sequences
+    # Convert data to numpy arrays
+    inputs = inputs.to_numpy()
+    targets = targets.to_numpy()
 
     return inputs, targets
+
+
+async def train_hmm(X, num_states, num_iterations):
+    # Reshape the data
+    input_dim = X.shape[1]
+    X = X.reshape(-1, input_dim)
+
+    # Create an HMM model
+    model = hmm.GaussianHMM(n_components=num_states, n_iter=num_iterations)
+
+    # Fit the model to the data
+    model.fit(X)
+
+    return model
+async def predict_next_candles(model, last_observation, num_predictions=20):
+    # Predict the next state or candlestick based on the current state
+    next_state = model.predict(last_observation.reshape(1, -1))[0]
+
+    # Generate new samples based on the predicted next state
+    generated_samples, _ = model.sample(num_predictions, random_state=next_state)
+
+    return generated_samples
 
 async def main():
     # Load and preprocess data
     X, y = await load_data()
 
     input_dim = X.shape[1]
-    output_dim = y.shape[1]
     num_states = 3  # Number of hidden states
     num_iterations = 100  # Number of Baum-Welch iterations
 
-    # Reshape the data to 2D array (num_samples, num_features)
-    X = df.to_numpy().reshape(-1, input_dim)
+    # Reshape the data
+    X = X.reshape(-1, input_dim)
 
     # Create an HMM model
     model = hmm.GaussianHMM(n_components=num_states, n_iter=num_iterations)
 
-    # Fit the model to the data (train the HMM)
+    # Fit the model to the data
     model.fit(X)
 
-    # Generate predictions for the next 20 candles based on the trained model
-    num_predictions = 20
-    start_state = model.startprob_.argmax()  # Choose the state with the highest initial probability
+    # Get the last observation from the data (you can change this accordingly)
+    last_observation = X[-1]
 
-    # Simulate the HMM to generate new samples
-    generated_samples, _ = model.sample(num_predictions, random_state=start_state)
+    # Predict the next 20 candles
+    predicted_candles = await predict_next_candles(model, last_observation, num_predictions=20)
 
     # Print each generated sample
-    for i in range(len(generated_samples)):
-        sample = generated_samples[i]
-        # Reshape the sample back to (window_size, input_dim) shape
-        sample = sample.reshape(-1, input_dim)
-        for j in range(len(sample)):
-            open_price, high_price, low_price, close_price, volume = sample[j]
-            print(
-                f"Sample {i+1}, Candle {j+1}: Open={open_price}, High={high_price}, Low={low_price}, Close={close_price}, Volume={volume}"
-            )
+    for i in range(len(predicted_candles)):
+        sample = predicted_candles[i]
+        print(f"Sample {i+1}: Open={sample[0]}, High={sample[1]}, Low={sample[2]}, Close={sample[3]}, Volume={sample[4]}")
 
-# Run the main function
 asyncio.run(main())
