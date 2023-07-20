@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.svm import SVR
-
+from sklearn.metrics import mean_squared_error, r2_score
 
 import pandas as pd
 import numpy as np
@@ -98,10 +98,20 @@ async def main():
     # Concatenate predictions along the last axis
     predictions = np.stack(predictions, axis=-1)
 
-    # Print each candle in the prediction
-    for i in range(len(predictions)):
-        candle = predictions[i]
-        print(f"Candle {i+1}: Open={candle[0]}, High={candle[1]}, Low={candle[2]}, Close={candle[3]}, Volume={candle[4]}")
+    # Extract the last predicted close price
+    last_predicted_candle = predictions[-1]
+    last_predicted_close = last_predicted_candle[3]
+
+    # Print the last predicted close price
+    print("Last Predicted Close Price:", last_predicted_close)
+
+    # Calculate and print MSE
+    mse = mean_squared_error(y_test[:, 3], predictions[:, 3])
+    print("Mean Squared Error (MSE):", mse)
+
+    # Calculate and print R-squared
+    r_squared = r2_score(y_test[:, 3], predictions[:, 3])
+    print("R-squared (R^2):", r_squared)
 
 
 asyncio.run(main())

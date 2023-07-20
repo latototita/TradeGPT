@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF
+from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.ensemble import VotingRegressor
 import pandas as pd
 import numpy as np
@@ -109,38 +110,27 @@ async def main():
     # Concatenate the predictions along the last axis
     predictions = np.stack(predictions, axis=-1)
 
-    # Print each candle in the prediction
-    for i in range(len(predictions)):
-        candle = predictions[i]
-        print(f"Candle {i+1}: Open={candle[0]}, High={candle[1]}, Low={candle[2]}, Close={candle[3]}, Volume={candle[4]}")
+    # Calculate the Mean Squared Error (MSE) for all predictions
+    mse = mean_squared_error(y_test, predictions)
+    print(f"\nMean Squared Error (MSE) for all predictions: {mse}")
 
-    # Calculate the percentage accuracy and the difference for each prediction
-    percentage_accuracies = []
-    differences = []
-    for i in range(predictions.shape[0]):
-        prediction = predictions[i]
-        real_value = y_test[i]
-        percentage_accuracy = 100 * np.mean(np.isclose(prediction, real_value, rtol=1e-3))
-        difference = np.abs(prediction - real_value)
-        percentage_accuracies.append(percentage_accuracy)
-        differences.append(difference)
+    # Calculate the R-squared (R^2) for all predictions
+    r_squared = r2_score(y_test, predictions)
+    print(f"R-squared (R^2) for all predictions: {r_squared}")
+    # Get the last candle's close price from the predictions
+    last_candle_prediction = predictions[-1]
+    last_candle_close_price = last_candle_prediction[3]  # Index 3 corresponds to the 'Close' value
 
-    # Calculate the overall percentage accuracy of each model
-    model_percentage_accuracies = {}
-    for i, (model_name, _) in enumerate(models):
-        model_predictions = predictions[:, i]
-        model_real_values = y_test[:, i]
-        model_percentage_accuracy = 100 * np.mean(np.isclose(model_predictions, model_real_values, rtol=1e-3))
-        model_percentage_accuracies[model_name] = model_percentage_accuracy
+    print(f"\nLast Candle's Close Price (Predicted): {last_candle_close_price}")
 
-    # Display the results
-    print("Percentage Accuracy and Differences for Each Prediction:")
-    for i in range(len(percentage_accuracies)):
-        print(f"Prediction {i+1}: Percentage Accuracy = {percentage_accuracies[i]:.2f}%, Difference = {differences[i]}")
+    # Get the actual values for the last candle from the test set
+    last_candle_actual = y_test[-1]
 
-    print("\nOverall Percentage Accuracy of Each Model:")
-    for model_name, model_percentage_accuracy in model_percentage_accuracies.items():
-        print(f"{model_name}: Percentage Accuracy = {model_percentage_accuracy:.2f}%")
+    # Calculate Mean Squared Error (MSE) for the last candle
+    last_candle_mse = mean_squared_error(last_candle_actual, last_candle_prediction)
+    print(f"Mean Squared Error (MSE) for the Last Candle: {last_candle_mse}")
 
-
+    # Calculate R-squared (R^2) for the last candle
+    last_candle_r2 = r2_score(last_candle_actual, last_candle_prediction)
+    print(f"R-squared (R^2) for the Last Candle: {last_candle_r2}")
 asyncio.run(main())

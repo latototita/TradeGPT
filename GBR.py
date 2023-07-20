@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import GradientBoostingRegressor
-
+from sklearn.metrics import mean_squared_error, r2_score
 import pandas as pd
 import numpy as np
 import asyncio
@@ -81,6 +81,7 @@ async def main():
     input_dim = X_train.shape[1]
     output_dim = y_train.shape[1]
     learning_rate = 0.001
+    
 
 
     models = []
@@ -99,11 +100,29 @@ async def main():
     # Concatenate predictions along the last axis
     predictions = np.stack(predictions, axis=-1)
 
-    # Print each candle in the prediction
-    for i in range(len(predictions)):
-        candle = predictions[i]
-        print(f"Candle {i+1}: Open={candle[0]}, High={candle[1]}, Low={candle[2]}, Close={candle[3]}, Volume={candle[4]}")
+    # Calculate the Mean Squared Error (MSE) for all predictions
+    mse = mean_squared_error(y_test, predictions)
+    print(f"\nMean Squared Error (MSE) for all predictions: {mse}")
 
+    # Calculate the R-squared (R^2) for all predictions
+    r_squared = r2_score(y_test, predictions)
+    print(f"R-squared (R^2) for all predictions: {r_squared}")
+    # Get the last candle's close price from the predictions
+    last_candle_prediction = predictions[-1]
+    last_candle_close_price = last_candle_prediction[3]  # Index 3 corresponds to the 'Close' value
+
+    print(f"\nLast Candle's Close Price (Predicted): {last_candle_close_price}")
+
+    # Get the actual values for the last candle from the test set
+    last_candle_actual = y_test[-1]
+
+    # Calculate Mean Squared Error (MSE) for the last candle
+    last_candle_mse = mean_squared_error(last_candle_actual, last_candle_prediction)
+    print(f"Mean Squared Error (MSE) for the Last Candle: {last_candle_mse}")
+
+    # Calculate R-squared (R^2) for the last candle
+    last_candle_r2 = r2_score(last_candle_actual, last_candle_prediction)
+    print(f"R-squared (R^2) for the Last Candle: {last_candle_r2}")
 
 asyncio.run(main())
     

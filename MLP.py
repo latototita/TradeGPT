@@ -1,4 +1,5 @@
 import pandas as pd
+import pandas_ta as ta
 import numpy as np
 import asyncio
 import os
@@ -154,12 +155,14 @@ def run_trading_bot(timeframe):
                 if len(trades)>50:
                     print("There are open trades. Skipping analysis.")
                     await asyncio.sleep(1200)
-                    continue
+                    continue 
                 prices = await connection.get_symbol_price(symbol)
                 current_price = prices['ask']
                 take_profit = predicted_close[-1]
-                if take_profit>current_price: #  and any(keyword in var for var in [dt, db, hns,jcp,trippleb,tripplet,ihns] for keyword in keywords):
-                    stop_loss = 0# current_price -((80/100)*current_price)                    
+                df['rsi'] = ta.rsi(df['close'], length=14)
+                df['atr'] = ta.atr(df['high'], df['low'], df['close'], length=14)
+                if take_profit>current_price:# and df['rsi'][-1]<35: #  and any(keyword in var for var in [dt, db, hns,jcp,trippleb,tripplet,ihns] for keyword in keywords):
+                    stop_loss =0.00000 # current_price - (30 * df['atr'][-1])# current_price -((80/100)*current_price)                    
                     try:
                         
                         result = await connection.create_market_buy_order(
@@ -182,8 +185,8 @@ def run_trading_bot(timeframe):
                         print(api.format_error(err))
 
                 take_profit = predicted_close[-1]
-                if take_profit<current_price:#  and any(keyword in var for var in [dt, db, hns,jcp,trippleb,tripplet,ihns] for keyword in keywords):
-                    stop_loss = 0# current_price + ((80/100)*current_price)                    
+                if take_profit<current_price:# and  df['rsi'][-1]>65:#  and any(keyword in var for var in [dt, db, hns,jcp,trippleb,tripplet,ihns] for keyword in keywords):
+                    stop_loss =0.00000 # current_price + (30 * df['atr'][-1])# current_price + ((80/100)*current_price)                    
                     try:
                         
                         result = await connection.create_market_sell_order(
@@ -214,7 +217,7 @@ def run_trading_bot(timeframe):
     asyncio.run(main())
 
 
-timeframe_combinations = ['1m', '5m', '15m','30m','1h','4h',]
+timeframe_combinations = ['15m','30m','1h','4h',]#'1m', '5m', 
 # Call the trading bot function for each combination
 for smaller_tf in timeframe_combinations:
     run_trading_bot(smaller_tf)
