@@ -24,6 +24,47 @@ Battery Capacity = (240 Wh * 2 days) / 12V = 40 Ah
 
 For this setup, use two 800W 12V DC solar panels and a 12V DC battery with a capacity of at least 40Ah for two days of autonomy without recharging.
 
+
+
+
+
+To calculate the gear arrangement, torque requirements, and efficiency for different gear ratios, consider the following parameters:
+
+Motor Torque (T_motor): 3.0 Nm (maximum torque of the motor)
+Blade Gear Diameter (D_blade): 25 cm
+Blade Gear Weight (W_blade): 5 kg
+Gearbox Efficiency (η_gearbox): Assume 85% efficiency for the gear arrangement.
+
+Step 1: Determine Torque Requirements
+Assume optimal resistance (torque required for cutting) as 5 Nm.
+
+Step 2: Calculate Gear Ratio and Torque at 50% and 100% Function
+Assume two gear ratios:
+1. Gear Ratio 1 (GR1) for higher torque: 3:1
+2. Gear Ratio 2 (GR2) for lower torque: 10:1
+
+Calculate the torque required at each gear ratio:
+T_required_GR1 = 5 Nm
+T_required_GR2 = 5 Nm
+
+Calculate the torque at 50% and 100% function for each gear ratio:
+T_motor_50_percent = 1.5 Nm
+T_motor_100_percent = 3.0 Nm
+
+T_blade_GR1_50_percent = 4.5 Nm
+T_blade_GR1_100_percent = 9.0 Nm
+T_blade_GR2_50_percent = 15.0 Nm
+T_blade_GR2_100_percent = 30.0 Nm
+
+Step 3: Efficiency
+Assume gearbox efficiency of 85% (η_gearbox = 0.85).
+
+Step 4: Gear Arrangement Design
+Design the gear arrangement for each gear ratio to achieve the required torque at the blade gear for 50% and 100% function of the motor.
+
+Note: These calculations are based on assumptions and ideal scenarios. Real-world designs should consider factors like gear type, size, materials, and actual load conditions. Consult a mechanical engineer for an optimized and reliable blade system for your mini-tractor.
+
+
 Assumptions and Optimal Levels:
 - The 36mm gear motor with 3.0Nm torque is appropriate for cutting soil and handling small roots.
 - The gear system effectively amplifies the motor's torque output.
