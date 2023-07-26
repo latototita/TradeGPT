@@ -76,3 +76,23 @@ Assumptions and Optimal Levels:
 - For the solar panel and battery setup, two 800W 12V DC solar panels and a 12V DC battery with a capacity of at least 40Ah are recommended for two days of autonomy without recharging.
 
 Note: For critical applications, consult a solar energy expert and an engineer to design a precise system that meets the mini-tractor's energy needs and ensures optimal performance during soil cutting operations.
+
+
+
+The performance of the mini-tractor's blade system will vary at 50% and 100% function of the motor based on the selected gear ratios and the corresponding torque values.
+
+At 50% Function:
+1. Gear Ratio 1 (GR1) - Higher Torque: The mini-tractor will have relatively higher cutting force at 50% motor function with GR1, effective in cutting through softer soils and small roots. It might face limitations in cutting through denser or tougher soil conditions.
+2. Gear Ratio 2 (GR2) - Lower Torque: The mini-tractor will have lower cutting force at 50% motor function with GR2. Suitable for lighter cutting tasks and simpler soil conditions, may struggle with denser soil or larger roots.
+
+At 100% Function:
+1. Gear Ratio 1 (GR1) - Higher Torque: The mini-tractor will have higher cutting force at 100% motor function with GR1, performing better in cutting through various soil types and dealing with medium-sized roots.
+2. Gear Ratio 2 (GR2) - Lower Torque: The mini-tractor will have the highest cutting force at 100% motor function with GR2, capable of cutting through denser soil and larger roots more efficiently.
+
+Overall Assessment:
+- Performance depends on the chosen gear ratio and specific soil and root conditions.
+- Higher gear ratio (GR2) provides more cutting force but lower speed, suitable for tougher tasks.
+- Lower gear ratio (GR1) offers a balance between cutting force and speed, versatile for various cutting conditions.
+- Conduct field tests with both ratios to evaluate real-world cutting efficiency.
+- Fine-tune the blade system for optimal performance.
+- Consult with an engineer to optimize the system for your gardening needs.
